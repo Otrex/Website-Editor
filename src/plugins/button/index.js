@@ -18,14 +18,23 @@ export default {
           ],
           default: "primary",
         },
+        {
+          name: "class",
+          label: "Classes",
+          type: "text",
+          default: "",
+        },
       ],
       render(node) {
         const { id, props } = node;
+
+        const classes = [props.class || "", "element", "button"];
+        const classNames = `class="${classes.join(" ").trim()}"`;
         const style =
           props.variant === "primary"
             ? "background:#3182ce;color:#fff"
             : "background:#e2e8f0;color:#1a202c";
-        return `<a class="element button" data-element-id="${id}" href="${props.url}" style="padding:10px 20px;border-radius:6px;${style};display:inline-block;text-decoration:none;font-size:14px">${props.text}</a>`;
+        return `<a ${classNames} data-element-id="${id}" href="${props.url}" style="padding:10px 20px;border-radius:6px;${style};display:inline-block;text-decoration:none;font-size:14px">${props.text}</a>`;
       },
     },
   ],

@@ -20,13 +20,23 @@ const HeadingPlugin = {
           })),
           default: 1,
         },
+        {
+          name: "class",
+          label: "Classes",
+          type: "text",
+          default: "",
+        },
         { name: "color", label: "Color", type: "color", default: "#2d3748" },
       ],
       render(node) {
         const { id, props } = node;
+        console.log("Rendering heading", node);
+
         const level = props.level || 1;
+        const classes = [props.class || "", "element", "heading"];
+        const classNames = `class="${classes.join(" ").trim()}"`;
         const tag = `h${Math.min(6, Math.max(1, level))}`;
-        return `<${tag} class="element heading" style="color:${
+        return `<${tag} ${classNames} style="color:${
           props.color
         }" data-element-id="${id}">${escapeHtml(props.text)}</${tag}>`;
       },
