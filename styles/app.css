@@ -106,6 +106,15 @@ body {
   background: #bee3f8;
   color: #2a69ac;
 }
+
+.element-children {
+  margin-left: 15px;
+  border-left: 1px dashed #cbd5e0;
+  padding-left: 10px;
+}
+.element-item-group {
+  margin-bottom: 10px;
+}
 .delete-btn {
   background: #e53e3e;
   color: #fff;

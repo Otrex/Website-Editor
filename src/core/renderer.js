@@ -3,6 +3,7 @@ export class Renderer {
     this.iframe = iframe;
     this.events = eventBus;
     this.registry = registry;
+    this.__hasMounted = false;
     this._setupIframe();
   }
 
@@ -36,6 +37,8 @@ export class Renderer {
 
   _renderElement(node) {
     const def = this.registry.get(node.type);
+    console.log("Rendering", node, def);
+
     if (!def) return `<div class="element">Unknown ${node.type}</div>`;
     return def.render(node, {
       renderChild: (child) => this._renderElement(child),

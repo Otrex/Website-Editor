@@ -28,6 +28,10 @@ const panel = new PropertiesPanel({
   editor,
 });
 
+document
+  .getElementById("save-btn")
+  .addEventListener("click", () => editor.save());
+
 // // Demo content
 // editor.addElement({
 //   type: "heading",

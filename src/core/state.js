@@ -11,6 +11,22 @@ export class State {
       })
     );
   }
+  save() {
+    const snapshotData = JSON.stringify({
+      elements: this.elements,
+      selectedId: this.selectedId,
+    });
+
+    localStorage.setItem("editor-state", snapshotData);
+  }
+  load() {
+    const snapshotData = localStorage.getItem("editor-state") || "{}";
+    if (snapshotData) {
+      const data = JSON.parse(snapshotData);
+      this.elements = data.elements || [];
+      this.selectedId = data.selectedId || null;
+    }
+  }
   findById(id, nodes = this.elements) {
     for (const el of nodes) {
       if (el.id === id) return el;

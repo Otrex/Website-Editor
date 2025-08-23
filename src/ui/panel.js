@@ -36,19 +36,27 @@ export class PropertiesPanel {
   renderList() {
     const st = this.editor.state.snapshot();
 
-    const renderSnap = (el) => {
-      if (el.children && el.children.length) {
-        return `<div>${el.children.map((c) => renderSnap(c)).join("")} </div>`;
-      }
-
-      const text =
-        el.props?.text && el.props.text.length > 20
-          ? el.props.text.slice(0, 20) + "…"
-          : el.props?.text || el.id;
-      const selected = st.selectedId === el.id ? "selected" : "";
-      return `<div class="element-item ${selected}" data-id="${el.id}">
+    const renderSnap = (el, parent = false) => {
+      if (!el.children || el.children.length === 0 || parent) {
+        const text =
+          el.props?.text && el.props.text.length > 20
+            ? el.props.text.slice(0, 20) + "…"
+            : el.props?.text || el.id;
+        const selected = st.selectedId === el.id ? "selected" : "";
+        return `<div class="element-item ${selected}" data-id="${el.id}">
         <span>${el.type} - ${text}</span>
         <button class="delete-btn" data-del="${el.id}">×</button>
+      </div>`;
+      }
+
+      const childrenHTML = el.children.map((ch) => renderSnap(ch)).join("");
+      const parentHTML = renderSnap(el, true);
+
+      return `<div class="element-item-group">
+      ${parentHTML}
+      <div class="element-children">
+        ${childrenHTML}
+      </div>
       </div>`;
     };
 
@@ -58,15 +66,6 @@ export class PropertiesPanel {
     this.listEl.innerHTML = st.elements
       .map((el) => {
         return renderSnap(el);
-        //   const text =
-        //     el.props?.text && el.props.text.length > 20
-        //       ? el.props.text.slice(0, 20) + "…"
-        //       : el.props?.text || el.id;
-        //   const selected = st.selectedId === el.id ? "selected" : "";
-        //   return `<div class="element-item ${selected}" data-id="${el.id}">
-        //   <span>${el.type} - ${text}</span>
-        //   <button class="delete-btn" data-del="${el.id}">×</button>
-        // </div>`;
       })
       .join("");
 

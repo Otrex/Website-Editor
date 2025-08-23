@@ -11,6 +11,7 @@ export class Editor {
     this.registry = new Registry();
     this.events = new EventBus();
     this.state = new State();
+    // load initial state from localStorage
 
     this.renderer = new Renderer({
       iframe,
@@ -24,6 +25,7 @@ export class Editor {
     });
 
     this._wire();
+    this.state.load();
   }
 
   _wire() {
@@ -53,6 +55,11 @@ export class Editor {
     // plugin: { elements: [defs], setup?(editor){...} }
     plugin.elements.forEach((def) => this.registry.register(def));
     plugin.setup?.(this);
+  }
+
+  save() {
+    this.state.save();
+    alert("State saved to localStorage");
   }
 
   addElement({ type, props = {}, insertBefore = null, parentId = null }) {
