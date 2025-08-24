@@ -38,3 +38,6 @@ document
 //   props: { text: "Welcome to the Editor", level: 1 },
 // });
 editor.addElement({ type: "container", props: { background: "#f7fafc" } });
+
+editor.loadData();
+editor._commit();

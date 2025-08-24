@@ -17,7 +17,10 @@ export class Properties {
     const def = this.registry.get(el.type);
     const fields = def?.properties || [];
     const html = [
-      `<div class="property-group"><label>Element Type</label><input type="text" value="${el.type}" readonly></div>`,
+      `<div class="property-group">
+        <label>Element Type</label>
+        <input type="text" value="${el.type}" readonly>
+      </div>`,
     ]
       .concat(fields.map((f) => this._fieldHtml(f, el.props?.[f.name])))
       .join("");

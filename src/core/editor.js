@@ -8,9 +8,9 @@ import { uid } from "./utils.js";
 
 export class Editor {
   constructor({ iframe, overlay, propertiesRoot }) {
+    this.state = new State();
     this.registry = new Registry();
     this.events = new EventBus();
-    this.state = new State();
     // load initial state from localStorage
 
     this.renderer = new Renderer({
@@ -25,7 +25,6 @@ export class Editor {
     });
 
     this._wire();
-    this.state.load();
   }
 
   _wire() {
@@ -60,6 +59,10 @@ export class Editor {
   save() {
     this.state.save();
     alert("State saved to localStorage");
+  }
+
+  loadData() {
+    this.state.load();
   }
 
   addElement({ type, props = {}, insertBefore = null, parentId = null }) {

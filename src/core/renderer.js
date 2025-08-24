@@ -13,7 +13,17 @@ export class Renderer {
       const tpl = document.getElementById("iframe-css");
       doc.open();
       doc.write(
-        `<!DOCTYPE html><html><head><meta charset="utf-8">${tpl.innerHTML}</head><body><div id="canvas-content"></div></body></html>`
+        `<!DOCTYPE html>
+        <html>
+          <head>
+            <meta charset="utf-8" />
+            ${tpl.innerHTML}
+          </head>
+          <body>
+            <div id="canvas-content"></div>
+          </body>
+        </html>
+        `
       );
       doc.close();
       this.events.emit("iframe:ready");
@@ -31,6 +41,9 @@ export class Renderer {
       doc.body.appendChild(el);
       root = el;
     }
+
+    root = doc.getElementById("canvas-content");
+
     root.innerHTML = elements.map((el) => this._renderElement(el)).join("");
     this.events.emit("render:done");
   }
